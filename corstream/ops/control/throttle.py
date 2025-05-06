@@ -7,19 +7,21 @@ import time
 T = TypeVar("T")
 
 
-def throttle_op(rate: int, per_seconds: float) -> Callable[[AsyncIterable[T]], AsyncIterable[T]]:
+def throttle_op(
+    rate: int, per_seconds: float
+) -> Callable[[AsyncIterable[T]], AsyncIterable[T]]:
     """
     Limits the flow of items to a maximum of `rate` items per `per_seconds` seconds.
-    
+
     :param rate: The maximum number of items to emit.
     :param per_seconds: The time window in seconds for the rate limit.
     :return: Throttled async iterable.
     """
     if rate <= 0 or per_seconds <= 0:
         raise ValueError("Rate and per_seconds must be positive values.")
-    
+
     interval = per_seconds / rate
-    
+
     async def _inner(source: AsyncIterable[T]) -> AsyncIterator[T]:
         last_emit = 0.0
         async for item in source:
@@ -29,5 +31,5 @@ def throttle_op(rate: int, per_seconds: float) -> Callable[[AsyncIterable[T]], A
                 await asyncio.sleep(wait_time)
             last_emit = time.perf_counter()
             yield item
-            
+
     return _inner

@@ -8,7 +8,7 @@ T = TypeVar("T")
 async def to_list_sink(source: AsyncIterable[T]) -> List[T]:
     """
     Terminal sink that collects all items from the stream into a list.
-    
+
     :param source: The async iterable to consume.
     :return: A list of all stream items.
     """

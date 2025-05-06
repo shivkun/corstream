@@ -28,6 +28,7 @@ htmlcov/
 .dmypy.json
 *.py,cover
 .tox/
+.ruff_cache
 
 # Jupyter / IPython
 .ipynb_checkpoints/
