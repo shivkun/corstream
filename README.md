@@ -119,16 +119,16 @@ from corstream import Stream
 async def get_email(user_id: int) -> str:
     return f"user{user_id}@example.com"
 
-async def send_batch(batch: list[str]):
+async def send_batch(batch: list[str]) -> None:
     print("Sending:", batch)
 
 await (
     Stream
     .from_iterable(range(1, 11))
     .filter(lambda x: x % 2 == 0)
-    .map_async(get_email, max_concurrency=3)
+    .map_async(get_email, max_concurrent=3)
     .batch(5)
-    .log("batch")
+    .log(label="batch")
     .for_each(send_batch)
 )
 ```
