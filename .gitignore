@@ -1,0 +1,48 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.egg-info/
+.eggs/
+*.manifest
+*.spec
+
+# Poetry virtual environments (if using .venv)
+.venv/
+env/
+venv/
+
+# pytest cache
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+*.log
+
+# MyPy / Ruff / Coverage
+.mypy_cache/
+.cache/
+.dmypy.json
+*.py,cover
+.tox/
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+.profile/
+
+# Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS/Linux
+.DS_Store
+Thumbs.db
+*.swp
+
+# Poetry
+poetry.lock
