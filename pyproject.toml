@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/shivkun/corstream"
 repository = "https://github.com/shivkun/corstream"
 documentation = "https://github.com/shivkun/corstream#readme"
-keywords = ["asyncio", "streams", "pipelines", "functional", "couroutines", "declarative"]
+keywords = ["asyncio", "streams", "pipelines", "functional", "coroutines", "declarative"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
