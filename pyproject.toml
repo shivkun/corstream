@@ -5,6 +5,22 @@ description = "A coroutine composition framework for declarative async pipelines
 authors = ["Shiv <shiv@zerobytes.fr>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/shivkun/corstream"
+repository = "https://github.com/shivkun/corstream"
+documentation = "https://github.com/shivkun/corstream#readme"
+keywords = ["asyncio", "streams", "pipelines", "functional", "couroutines", "declarative"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed"
+]
 packages = [{ include = "corstream" }]
 
 [tool.poetry.dependencies]
