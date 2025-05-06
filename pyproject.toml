@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "corstream"
-version = "0.1.0"
+version = "0.1.0a1"
 description = "A coroutine composition framework for declarative async pipelines in Python"
 authors = ["Shiv <shiv@zerobytes.fr>"]
 license = "MIT"
