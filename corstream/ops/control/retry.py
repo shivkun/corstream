@@ -11,7 +11,7 @@ def retry_op(
 ) -> Callable[[AsyncIterable[T]], AsyncIterable[T]]:
     """
     Wraps the previous operator in the stream with retry logic.
-    Retries the item up to `retries` times with optional delay between attemps.
+    Retries the item up to `retries` times with optional delay between attempts.
 
     :param retries: Number of retries before giving up.
     :param delay: Delay in seconds between retries.
