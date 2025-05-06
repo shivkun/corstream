@@ -47,3 +47,7 @@ Thumbs.db
 
 # Poetry
 poetry.lock
+
+# Build
+build/
+dist/
