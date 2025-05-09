@@ -29,6 +29,7 @@ def map_async_op(
 
     return _inner
 
+
 async def _run_map_async(
     source: AsyncIterable[T],
     fn: AsyncMapFunc[T, U],
@@ -37,14 +38,14 @@ async def _run_map_async(
     semaphore = asyncio.Semaphore(max_concurrent)
     queue: asyncio.Queue[Tuple[bool, U | Exception]] = asyncio.Queue()
     tasks = []
-    
+
     async def worker(item: T) -> None:
-            async with semaphore:
-                try:
-                    result = await fn(item)
-                    await queue.put((True, result))
-                except Exception as e:
-                    await queue.put((False, e))
+        async with semaphore:
+            try:
+                result = await fn(item)
+                await queue.put((True, result))
+            except Exception as e:
+                await queue.put((False, e))
 
     async for item in source:
         task = asyncio.create_task(worker(item))
@@ -61,7 +62,5 @@ async def _run_map_async(
             yield value
         else:
             raise (
-                value
-                if isinstance(value, Exception)
-                else Exception("Unknown error")
+                value if isinstance(value, Exception) else Exception("Unknown error")
             )
