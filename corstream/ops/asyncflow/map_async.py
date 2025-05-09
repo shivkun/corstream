@@ -24,11 +24,21 @@ def map_async_op(
         raise ValueError("max_concurrent must be >= 1")
 
     async def _inner(source: AsyncIterable[T]) -> AsyncIterator[U]:
-        semaphore = asyncio.Semaphore(max_concurrent)
-        queue: asyncio.Queue[Tuple[bool, U | Exception]] = asyncio.Queue()
-        tasks = []
+        async for result in _run_map_async(source, fn, max_concurrent):
+            yield result
 
-        async def worker(item: T) -> None:
+    return _inner
+
+async def _run_map_async(
+    source: AsyncIterable[T],
+    fn: AsyncMapFunc[T, U],
+    max_concurrent: int = 5,
+) -> AsyncIterator[U]:
+    semaphore = asyncio.Semaphore(max_concurrent)
+    queue: asyncio.Queue[Tuple[bool, U | Exception]] = asyncio.Queue()
+    tasks = []
+    
+    async def worker(item: T) -> None:
             async with semaphore:
                 try:
                     result = await fn(item)
@@ -36,24 +46,22 @@ def map_async_op(
                 except Exception as e:
                     await queue.put((False, e))
 
-        async for item in source:
-            task = asyncio.create_task(worker(item))
-            tasks.append(task)
+    async for item in source:
+        task = asyncio.create_task(worker(item))
+        tasks.append(task)
 
-        # Wait for all tasks to complete
-        await asyncio.gather(*tasks)
+    # Wait for all tasks to complete
+    await asyncio.gather(*tasks)
 
-        # Drain the queue
-        while not queue.empty():
-            ok, value = await queue.get()
-            if ok:
-                assert not isinstance(value, Exception)
-                yield value
-            else:
-                raise (
-                    value
-                    if isinstance(value, Exception)
-                    else Exception("Unknown error")
-                )
-
-    return _inner
+    # Drain the queue
+    while not queue.empty():
+        ok, value = await queue.get()
+        if ok:
+            assert not isinstance(value, Exception)
+            yield value
+        else:
+            raise (
+                value
+                if isinstance(value, Exception)
+                else Exception("Unknown error")
+            )
